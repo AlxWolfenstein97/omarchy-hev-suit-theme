@@ -6,7 +6,7 @@ compositor called **Hyprland**, an opinionated Arch called **Omarchy**, and a
 terminal that answered in hazard orange. The resonance cascade still happened
 — of course it did — but the desktop held. Facility black. Blueprint cyan on
 the monitors. Active Hypr borders run a 45° **HEV-orange → blueprint-cyan**
-gradient (same dual-accent trick as the asphalt night pack). And the suit
+gradient (same dual-accent trick as Asphalt, Galuga, CS, Cyber Shadow, Doom 2016, Eternal, Caged, KI, Rising, Stanley, SF6, T2D & USFIV). And the suit
 got into the system: boot, low power, updates, wrong unlock — a lite patch of
 GothLady HEV lines on the desktop. Full voice still lives in *Black Mesa* for
 anyone who owns the game; some workshop notes say they could listen to her
