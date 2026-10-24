@@ -6,11 +6,12 @@ compositor called **Hyprland**, an opinionated Arch called **Omarchy**, and a
 terminal that answered in hazard orange. The resonance cascade still happened
 — of course it did — but the desktop held. Facility black. Blueprint cyan on
 the monitors. Active Hypr borders run a 45° **HEV-orange → blueprint-cyan**
-gradient (same dual-accent trick as Asphalt, Galuga, CS, Cyber Shadow, Doom 2016, Eternal, Caged, KI, Rising, Stanley, SF6, T2D & USFIV). And the suit
-got into the system: boot, low power, updates, wrong unlock — a lite patch of
-GothLady HEV lines on the desktop. Full voice still lives in *Black Mesa* for
-anyone who owns the game; some workshop notes say they could listen to her
-all day. Fair. Same story, better rice.
+gradient (same dual-accent trick as Asphalt, Galuga, CS, Cyber Shadow, Doom 2016, Eternal, Caged, KI, Rising, Stanley, SF6, T2D & USFIV). And the suit left a lite patch of GothLady HEV lines in `sounds/` — optional
+desktop wiring lives in a
+[separate hooks repo](https://github.com/AlxWolfenstein97/omarchy-hev-suit-sound-hooks)
+(theme packs can’t ship runnable code for the gallery). Full voice still lives
+in *Black Mesa* for anyone who owns the game; some workshop notes say they
+could listen to her all day. Fair. Same story, better rice.
 
 Orange-suit theme for [Omarchy](https://omarchy.org/). Inspired by the look of
 *Black Mesa* / *Half-Life* — **not affiliated with Valve or Crowbar Collective**
@@ -91,7 +92,7 @@ Cycle wallpapers with `omarchy theme bg next`.
 |-------|------|
 | `colors.toml` | Palette (the real theme) |
 | `backgrounds/` | Wallpapers |
-| `sounds/` | Four GothLady HEV cues — optional wiring via `install-sounds.sh` / `uninstall-sounds.sh` (see [How HEV system sounds work](#how-hev-system-sounds-work)) |
+| `sounds/` | Four GothLady HEV cues — optional desktop wiring in [hev-suit-sound-hooks](https://github.com/AlxWolfenstein97/omarchy-hev-suit-sound-hooks) |
 | `unlock.png` / `preview-unlock.png` | Plymouth unlock + picker mockup |
 | `preview.png` | Theme switcher preview |
 | `icon.txt` / `logo.txt` (+ `about.txt` / `screensaver.txt`) | About & screensaver **ASCII** branding |
@@ -123,98 +124,20 @@ good path.
 
 Style → Unlock → pick this theme (`unlock.png` / `preview-unlock.png`).
 
-## How HEV system sounds work
+## System sounds (optional)
 
-Extra for **this** theme — same spirit as the plugin extenders below: palette +
-art ship by default; the VO is optional desktop wiring you opt into once.
-Other themes stay quiet because the dispatcher only plays files from the
-*current* theme’s `sounds/` folder.
+This pack ships four GothLady HEV cues under `sounds/` (login / battery /
+update / denied). Wiring them into Omarchy hooks is **optional** and lives in a
+separate repo — themes listed in the gallery can’t contain scripts or hooks:
 
-Lovingly voiced by **Kerensa “Goth_Lady1987” Hayes**, chopped / shipped here by
+**[omarchy-hev-suit-sound-hooks](https://github.com/AlxWolfenstein97/omarchy-hev-suit-sound-hooks)**
+— install/uninstall the `omarchy-sound` dispatcher + `hev-sound` hooks, cue
+map, and how each trigger fires. Denied still needs
+[Lock Sound](https://github.com/AlxWolfenstein97/omarchy-lock-sound).
+
+Lovingly voiced by **Kerensa “Goth_Lady1987” Hayes**, chopped here by
 **Alex_Wolfenstein97**. Full pack on Steam Workshop:
 [GothLady’s HEV Suit Voice](https://steamcommunity.com/sharedfiles/filedetails/?id=2877289836).
-This theme is a **lite** pack — four desktop cues. There’s a whole lot more of
-her if you own *Black Mesa*. If you don’t… why are you even here?
-
-| File | Line | Trigger |
-|------|------|---------|
-| `sounds/login.ogg` | Welcome + vitals OK (welcome bits trimmed) | Desktop start |
-| `sounds/battery.ogg` | Warning: vital signs critical | Low battery (≤10%, discharging) |
-| `sounds/update.ogg` | Power restored | After `omarchy update` finishes (see below) |
-| `sounds/denied.ogg` | Warning: biohazard detected | Wrong password on the lock screen |
-
-Levels are the edited export as-is (mean roughly **−15 to −18 dB**) — clear
-over quiet lofi / NCS / Omarchy Radio, not fighting a cliamp stream at 0 dB,
-and nowhere near the clipped in-game original HEV blast.
-
-### Exactly how each cue fires
-
-1. **Login** — Hyprland’s stock autostart runs
-   `sleep 2 && omarchy-hook post-boot` after the desktop comes up. That hook
-   directory runs `omarchy-sound login`, which `paplay`s
-   `~/.local/state/omarchy/current/theme/sounds/login.ogg` if present.
-2. **Battery** — Omarchy’s battery service polls every 30s (and on AC changes).
-   When you’re on battery, discharging, at or below **10%**, and haven’t been
-   notified yet this discharge cycle, it runs `omarchy-battery-low`, which
-   fires the `battery-low` hooks → `omarchy-sound battery`.
-3. **Update** — stock Omarchy calls `omarchy-hook post-update` **mid-pipeline**:
-   after system packages + migrations, **before** AUR, mise, and orphan
-   cleanup. Official docs say the same (“after system packages and
-   migrations”). The floating “Done — press any key” prompt
-   (`omarchy-show-done`) only appears **after** the whole `omarchy-update`
-   process exits — much later. Snapshot creation still runs up front even on
-   a no-op / “joke” update (same reason Omarchy always snapshots before
-   touching pkgs). There is no later hook we can use.
-
-   So this theme’s `hev-sound.hook` does **not** play immediately. It resolves
-   the parent `omarchy-update` PID **before** returning (walking `/proc` while
-   those parents still exist), then `setsid`s a waiter that plays
-   `sounds/update.ogg` when that PID exits — roughly as press-any-key shows,
-   after AUR/mise. Manual `omarchy hook post-update` (no update parent) falls
-   back to playing right away. Empty updates still cue: Omarchy always runs
-   the hook after confirm, same as the snapshot. Debug trail:
-   `~/.local/state/omarchy/hev-update-sound.log`.
-4. **Denied** — stock lock has **no** hook. Install
-   [Lock Sound](https://github.com/AlxWolfenstein97/omarchy-lock-sound) (a
-   published `omarchy.lock` clone with one extra line). Wrong password →
-   `omarchy-sound denied` → biohazard while this theme is current.
-
-The dispatcher (`~/.local/bin/omarchy-sound`) is theme-agnostic: switch away
-from Hev Suit and the same hooks become no-ops (missing file → exit 0, no
-freedesktop ding). Switch back and the cues return. To tear the wiring down
-entirely (not just go quiet), use `uninstall-sounds.sh` below.
-
-### Wire it once / wire it down
-
-From this theme directory (after `theme install` / clone):
-
-```bash
-~/.config/omarchy/themes/hev-suit/install-sounds.sh
-# tear down dispatcher + hev-sound hooks (theme + Lock Sound plugin untouched):
-~/.config/omarchy/themes/hev-suit/uninstall-sounds.sh
-```
-
-`install-sounds.sh` drops `~/.local/bin/omarchy-sound` and the three
-`hev-sound.hook` files under `hooks/{post-boot,battery-low,post-update}.d/`.
-`uninstall-sounds.sh` removes those same paths (and the optional update-sound
-debug log). Sources live in `sound-wiring/` if you want to inspect them.
-
-**Denied** still needs
-[Lock Sound](https://github.com/AlxWolfenstein97/omarchy-lock-sound) — stock
-lock has no failure hook:
-
-```bash
-omarchy plugin add https://github.com/AlxWolfenstein97/omarchy-lock-sound.git --enable
-omarchy-restart-shell
-# later:
-omarchy plugin remove io.github.alxwolfenstein97.lock-sound --yes
-```
-
-Smoke-test: `omarchy-sound login` / `battery` / `update` / `denied`.
-
-Hook / dispatcher pattern inspired by
-[Shiver-dev01/omarchy-black-mesa-theme](https://github.com/Shiver-dev01/omarchy-black-mesa-theme)
-(they document the wiring; this pack ships the clips + install/uninstall).
 
 ## Extend further with plugins
 
@@ -237,12 +160,13 @@ theme, build good extenders, build more good themes that work as a base *and*
 with the extenders — then circle back. Same workshop energy: you’re not modding
 a game, you’re modding the *system*.
 
-### This theme’s audio (denied)
+### This theme’s audio
 
+- **[HEV Suit sound hooks](https://github.com/AlxWolfenstein97/omarchy-hev-suit-sound-hooks)** —
+  login / battery / update wiring (`omarchy-sound` + hooks).
 - **[Lock Sound](https://github.com/AlxWolfenstein97/omarchy-lock-sound)** —
   published `omarchy.lock` clone that plays `sounds/denied.ogg` on wrong
-  password via `omarchy-sound`. Required for the biohazard cue; login /
-  battery / update only need the hooks above.  
+  password via `omarchy-sound`.  
   `omarchy plugin add https://github.com/AlxWolfenstein97/omarchy-lock-sound.git --enable`
 
 ### The big sweep
