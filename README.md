@@ -115,10 +115,10 @@ marks (put personal art somewhere easy to reach). The Appearance file picker wor
 but drilling into `~/.config/omarchy/themes/...` is slow busywork for something
 optional. Don’t feel obliged to bring mine.
 
-The `.png` versions are here for the README and for a quick Appearance → Branding
-→ About → **Set From Image** try. In my experience Omarchy’s image→ASCII path is a bit thinicky on
-color and boxing, so don’t expect magic from the PNGs — the hand text is the
-good path.
+The `.png` versions are here for the README and for a quick
+Appearance → Branding → About → **Set From Image** try. In my experience
+Omarchy’s image→ASCII path is a bit thinicky on color and boxing, so don’t
+expect magic from the PNGs — the hand text is the good path.
 
 ### Unlock
 
