@@ -141,7 +141,7 @@ Lovingly voiced by **Kerensa “Goth_Lady1987” Hayes**, chopped here by
 
 ## Extend further with plugins
 
-This repo is **palette + assets** on purpose. Omarchy already colour-coordinates
+This repo is **palette + assets** on purpose. Omarchy already color-coordinates
 the shell, terminals, and editor from `colors.toml`. The plugins below push that
 idea as far as it can reasonably go — optional extenders, not required theme
 baggage. Themes keep working without them; authors can stick to the snappier
@@ -155,7 +155,7 @@ inch-a-lada if you want the desktop to feel like yours.
 Black Mesa sits in the same lane as
 [Asphalt Legends](https://github.com/AlxWolfenstein97/omarchy-asphalt-legends-theme)
 — palette + assets that play nice with Omarchy’s stock theming, then optional
-extenders that carry the same colours farther across the desktop. Build one good
+extenders that carry the same colors farther across the desktop. Build one good
 theme, build good extenders, build more good themes that work as a base *and*
 with the extenders — then circle back. Same workshop energy: you’re not modding
 a game, you’re modding the *system*.
@@ -190,8 +190,8 @@ already keeps them in lockstep.
 |--------|----------------|
 | **[OmaOBS](https://github.com/AlxWolfenstein97/omaobs)** | OBS Studio (real Yami `Omarchy.ovt`) |
 | **[OmaCursor](https://github.com/AlxWolfenstein97/omacursor)** | Pointer / Adwaita XCursor recolor (+ optional SDDM) |
-| **[OmaHud](https://github.com/AlxWolfenstein97/omahud)** | MangoHud colours only — live in-game retint; Goverlay keeps metrics/layout |
-| **[OmaBoot](https://github.com/AlxWolfenstein97/omaboot)** | Limine boot menu colours |
+| **[OmaHud](https://github.com/AlxWolfenstein97/omahud)** | MangoHud colors only — live in-game retint; Goverlay keeps metrics/layout |
+| **[OmaBoot](https://github.com/AlxWolfenstein97/omaboot)** | Limine boot menu colors |
 | **[OmaVT](https://github.com/AlxWolfenstein97/omavt)** | Virtual console / TTY palette |
 | **[OmaTTY](https://github.com/AlxWolfenstein97/omatty)** | Console font (Terminus-first, accessibility) |
 
@@ -242,14 +242,14 @@ full wipe: `…/<plugin>/uninstall.sh --yes`.
 
 Browse more on the [Omarchy Plugins](https://plugins.omarchy.org/) site.
 
-**Honest stop-line:** these extenders only chase places that accept colour data
+**Honest stop-line:** these extenders only chase places that accept color data
 (or a clean conversion). Websites, Steam chrome, document paper in LibreOffice,
 and similar “own paint engine / remote CSS” surfaces are out of scope on purpose
 — documented in Chroma’s README. Unthemed beats a half-assed chase.
 
 ## Taste
 
-Colours and contrast are tuned for what I like to look at. If they feel loud or
+Colors and contrast are tuned for what I like to look at. If they feel loud or
 wrong for you, fork and retune `colors.toml` without guilt. (Console font sizing
 for low vision lives in [OmaTTY](https://github.com/AlxWolfenstein97/omatty), not
 this theme.)
